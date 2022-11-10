@@ -15,14 +15,14 @@ router
 
 router
     .route('/industry')
-    .get(experienceController.getCertificate)
-    .post(experienceController.createNewCertificate);
+    .get(experienceController.getIndustry)
+    .post(experienceController.createNewIndustry);
 
 router
     .route('/industry/:title')
-    .get(experienceController.getCertificateWithTitle)
-    .patch(experienceController.updateCertificate)
-    .delete(experienceController.deleteCertificate);
+    .get(experienceController.getIndustryWithTitle)
+    .patch(experienceController.updateIndustry)
+    .delete(experienceController.deleteIndustry);
 
 router
     .route('/freelance')
@@ -31,8 +31,8 @@ router
 
 router
     .route('/freelance/:title')
-    .get(experienceController.getCertificateWithTitle)
-    .patch(experienceController.updateCertificate)
+    .get(experienceController.getFreelanceWithPlatform)
+    .patch(experienceController.updateFreelance)
     .delete(experienceController.deleteFreelance);
 
 
