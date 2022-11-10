@@ -18,7 +18,7 @@ const workshopSchema = mongoose.Schema({
     unique: [true, 'Date must be unique'],
   },
   time: {
-    type: TimeRanges,
+    type: String,
     unique: [true, 'Time must be unique'],
   }
 });

@@ -8,7 +8,7 @@ router
     .post(experienceController.createNewManagement);
 
 router
-    .route('/industry/:type')
+    .route('/management/:type')
     .get(experienceController.getManagementWithInstituition)
     .patch(experienceController.updateManagement)
     .delete(experienceController.deleteManagement);

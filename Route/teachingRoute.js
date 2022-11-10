@@ -5,7 +5,7 @@ const router = express.Router();
 
 router
   .route('/courses')
-  .get(teachingController.getCourse)
+  .get(teachingController.getCourses)
   .post(teachingController.createNewCourse);
 
 router
@@ -22,7 +22,7 @@ router
 
 router
   .route('/supervision/:title')
-  .get(teachingController.getSupervisionWithTitle)
+  .get(teachingController.getSupervisionWithId)
   .patch(teachingController.updateSupervision)
   .delete(teachingController.deleteSupervision);
 
@@ -33,7 +33,7 @@ router
 
 router
   .route('/workshops/:title')
-  .get(teachingController.getWorkshopWithTitle)
+  .get(teachingController.getWorkshopWithCategory)
   .patch(teachingController.updateWorkshop)
   .delete(teachingController.deleteWorkshop);
 

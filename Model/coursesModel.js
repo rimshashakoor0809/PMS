@@ -11,7 +11,7 @@ const courseSchema = mongoose.Schema({
         },
 
         code: {
-            type: CharacterData,
+            type: String,
             required: [true, 'Please mention the course code.']
         },
 
@@ -31,7 +31,7 @@ const courseSchema = mongoose.Schema({
         },
 
         CourseDuration: {
-            type: TimeRanges,
+            type: String,
         },
 
         EnrolledStudents: {
@@ -50,7 +50,7 @@ const courseSchema = mongoose.Schema({
         },
 
         code: {
-            type: CharacterData,
+            type: String,
             required: [true, 'Please mention the course code.']
         },
 
@@ -70,7 +70,7 @@ const courseSchema = mongoose.Schema({
         },
 
         CourseDuration: {
-            type: TimeRanges,
+            type: String,
         },
 
         EnrolledStudents: {

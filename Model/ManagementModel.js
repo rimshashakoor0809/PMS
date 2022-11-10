@@ -31,7 +31,7 @@ const ManagementSchema = mongoose.Schema(
             
         },
         image: {
-            type: Image,
+            type: String,
             required: [true, 'Please upload the program image.']
         },
         startdate: {

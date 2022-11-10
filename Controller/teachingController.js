@@ -41,7 +41,7 @@ exports.createNewCourse = async (req, res) => {
     });
   }
 };
-exports.getCourseWithType = async(req, res) => {
+exports.getCourseWithCode = async(req, res) => {
   try {
     const courseID = await Courses.findOne({
       "title": { $regex: '^' + req.params.title, $options: 'i' },
@@ -279,7 +279,7 @@ exports.createNewSupervision = async(req, res) => {
   }
 };
 
-exports.getSupervisionWithCategory = async (req, res) => {
+exports.getSupervisionWithId= async (req, res) => {
   try {
     const supervisionID = await Supervision.findOne({
       "title": { $regex: '^' + req.params.title, $options: 'i' },

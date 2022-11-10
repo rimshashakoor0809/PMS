@@ -7,7 +7,7 @@ const FreelanceSchema = mongoose.Schema(
             required: [true, 'Please provide the postion.']
         },
         image: {
-            type: Image,
+            type: String,
             required: [true, 'Please upload the program image.']
         },
         address: {

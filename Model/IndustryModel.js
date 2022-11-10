@@ -10,7 +10,7 @@ const IndustrySchema = mongoose.Schema(
             type: String,
         },
         image: {
-            type: Image,
+            type: String,
             required: [true, 'Please upload the program image.']
         },
         address: {

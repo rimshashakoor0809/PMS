@@ -1,7 +1,7 @@
 const { query } = require('express');
-const Manage = require('./Model/ManagementModel');
-const Industry = require('./Model/IndustryModel');
-const Freelance = require('./Model/FreelanceModel');
+const Manage = require('../Model/ManagementModel');
+const Industry = require('../Model/IndustryModel');
+const Freelance = require('../Model/FreelanceModel');
 
 //Indutry Controllers
 exports.getIndustry = async (req, res) => {
