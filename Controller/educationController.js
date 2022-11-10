@@ -61,9 +61,8 @@ exports.getCertificateWithTitle = async (req, res) => {
     }
     res.status(200).json({
       status: 'success',
-      results: certificate.length,
       data: {
-        certificate: certID,
+        certID,
       },
     });
     

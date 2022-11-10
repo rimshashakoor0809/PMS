@@ -56,9 +56,9 @@ exports.getBlogByTitle = async (req, res) => {
     }
     res.status(200).json({
       status: 'success',
-      results: blog.length,
+      results: BlogTitle.length,
       data: {
-        blog: certID,
+        blog: BlogTitle,
       },
     });
     
@@ -74,7 +74,7 @@ exports.getBlogByTitle = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
   try {
-    const UBlog = await Blog.findByIdAndUpdate(
+    const UBlog = await Blog.findOneAndUpdate(
       req.params.title,
       req.body,
       {
