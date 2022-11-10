@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Portfolio Management System",
   "main": "app.js",
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rimshashakoor0809/PMS.git"
