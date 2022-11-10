@@ -4,6 +4,7 @@ const Workshops = require('../Model/workshopsModel');
 const Supervision = require('../Model/supervisionModel');
 
 //=======Courses=========//
+
 exports.getCourses = async (req, res) => {try {
   const course = await Courses.find();
   res.status(200).json({
@@ -178,7 +179,7 @@ exports.getWorkshop = async (req, res) => {
       });
       
     } catch (err) {
-      console.log(`Error❤️‍🔥: ${err}`);
+      console.log(`Error: ${err}`);
       res.status(400).json({
         status: 'Fail',
         message: 'Failed to get workshop',
@@ -238,6 +239,7 @@ exports.getWorkshop = async (req, res) => {
 
 
 //=======Supervision=========//
+
 exports.getSupervision = async (req, res) => {
   try {
     const supervision = await Supervision.find();
