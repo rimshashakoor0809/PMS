@@ -1,7 +1,7 @@
 const { query } = require('express');
 const Blog = require('../Model/BlogModel');
 const BLogWriter = require('../Model/BlogWriterModel');
-
+//blog edit
 
 
 exports.getBlog = async (req, res) => {
