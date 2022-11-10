@@ -3,6 +3,19 @@ const Manage = require('./Model/ManagementModel');
 const Industry = require('./Model/IndustryModel');
 const Freelance = require('./Model/FreelanceModel');
 
+exports.getIndustry = async (req, res) => {};
+exports.createNewIndustry = (req, res) => {};
+exports.getIndustryWithTitle = (req, res) => {};
+exports.updateIndustry = (req, res) => {};
+exports.deleteIndustry = (req, res) => {};
+
+
+exports.getFreelance = async (req, res) => {};
+exports.createNewFreelance = (req, res) => {};
+exports.getFreelanceWithPlatform = (req, res) => {};
+exports.updateFreelance = (req, res) => {};
+exports.deleteFreelance = (req, res) => {};
+
 exports.getManagement = async (req, res) => {
     try {
         const manage = await Manage.find();
@@ -93,7 +106,7 @@ exports.updateManagement = async (req, res) => {
         });
       }
 };
-exports.deleteDegree = async (req, res) => {
+exports.deleteManagement = async (req, res) => {
     try {
         const delmanage = await Management.findOneAndDelete(req.params.title);
         if (!delCert) {
