@@ -126,7 +126,7 @@ exports.getWorkshop = async (req, res) => {
     }
   };
 
-// exports.getSupervision = async (req, res) => {};
-// exports.createNewSupervision = (req, res) => {};
-// exports.updateSupervision = (req, res) => {};
-// exports.deleteSupervision = (req, res) => {};
+exports.getSupervision = async (req, res) => {};
+exports.createNewSupervision = (req, res) => {};
+exports.updateSupervision = (req, res) => {};
+exports.deleteSupervision = (req, res) => {};
