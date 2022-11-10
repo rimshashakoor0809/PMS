@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const courseSchema = mongoose.Schema({
-    type : String,
+    
     UnderGraduate: {
         type: String,
         required: [true, 'Please provide the course details.'],

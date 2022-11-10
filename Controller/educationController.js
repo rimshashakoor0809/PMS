@@ -3,11 +3,11 @@ const Degree = require('../Model/degreeModel');
 const Publication = require('../Model/publicationModel');
 const Certificate = require('../Model/certificateModel');
 
-exports.getDegree = async (req, res) => {};
-exports.createNewDegree = (req, res) => {};
-exports.getDegreeWithType = (req, res) => {};
-exports.updateDegree = (req, res) => {};
-exports.deleteDegree = (req, res) => {};
+exports.getDegree = async (req, res) => { };
+exports.createNewDegree = (req, res) => { };
+exports.getDegreeWithType = (req, res) => { };
+exports.updateDegree = (req, res) => { };
+exports.deleteDegree = (req, res) => { };
 
 exports.getCertificate = async (req, res) => {
   try {
@@ -59,13 +59,15 @@ exports.getCertificateWithTitle = async (req, res) => {
         message: 'No certificate Found😞',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        certID,
-      },
-    });
-    
+    else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          certID,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error❤️‍🔥: ${err}`);
     res.status(400).json({
@@ -110,11 +112,12 @@ exports.deleteCertificate = async (req, res) => {
         message: 'No certificate Found😞',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Certificate Deleted Successfully👍',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Certificate Deleted Successfully👍',
+      });
+    }
   } catch (err) {
     console.log(`Error❤️‍🔥: ${err}`);
     res.status(400).json({

@@ -51,17 +51,19 @@ exports.getBlogByTitle = async (req, res) => {
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
-        message: 'Blog not Found',
+        message: `Blog with title ${req.params.title} not Found`,
       });
     }
-    res.status(200).json({
-      status: 'success',
-      results: BlogTitle.length,
-      data: {
-        blog: BlogTitle,
-      },
-    });
-    
+    else {
+      res.status(200).json({
+        status: 'success',
+        results: BlogTitle.length,
+        data: {
+          blog: BlogTitle,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
@@ -103,14 +105,15 @@ exports.deleteBlog = async (req, res) => {
     if (!delBlog) {
       res.status(400).json({
         status: 'Fail',
-        message: 'Blog not Found',
+        message: `Blog with title ${req.params.title} not Found`,
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Blog Deleted Successfully',
-    });
+    else{
+      res.status(204).json({
+        status: 'success',
+        message: 'Blog Deleted Successfully',
+      });
+    }
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({

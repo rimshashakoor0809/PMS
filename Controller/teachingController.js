@@ -1,26 +1,28 @@
-const {query} = require('Express');
+const { query } = require('Express');
 const Courses = require('../Model/coursesModel');
 const Workshops = require('../Model/workshopsModel');
 const Supervision = require('../Model/supervisionModel');
 
 //=======Courses=========//
 
-exports.getCourses = async (req, res) => {try {
-  const course = await Courses.find();
-  res.status(200).json({
-    status: 'success',
-    results: course.length,
-    data: {
-      course: course,
-    },
-  });
-} catch (err) {
-  console.log(`Error: ${err}`);
-  res.status(400).json({
-    status: 'Fail',
-    message: 'Failed to get course',
-  });
-}};
+exports.getCourses = async (req, res) => {
+  try {
+    const course = await Courses.find();
+    res.status(200).json({
+      status: 'success',
+      results: course.length,
+      data: {
+        course: course,
+      },
+    });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get course',
+    });
+  }
+};
 
 exports.createNewCourse = async (req, res) => {
   try {
@@ -41,7 +43,7 @@ exports.createNewCourse = async (req, res) => {
     });
   }
 };
-exports.getCourseWithCode = async(req, res) => {
+exports.getCourseWithCode = async (req, res) => {
   try {
     const courseID = await Courses.findOne({
       "title": { $regex: '^' + req.params.title, $options: 'i' },
@@ -52,12 +54,14 @@ exports.getCourseWithCode = async(req, res) => {
         message: 'No course found',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        courseID,
-      },
-    });
+    else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          courseID,
+        },
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -67,7 +71,7 @@ exports.getCourseWithCode = async(req, res) => {
     });
   }
 };
-exports.updateCourse = async(req, res) => {
+exports.updateCourse = async (req, res) => {
   try {
     const courseUp = await Courses.findByIdAndUpdate(
       req.params.title,
@@ -102,11 +106,12 @@ exports.deleteCourse = async (req, res) => {
         message: 'No course found',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Course Deleted Successfully',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Course Deleted Successfully',
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -121,55 +126,56 @@ exports.deleteCourse = async (req, res) => {
 //=======Workshops=========//
 
 exports.getWorkshop = async (req, res) => {
-    try {
-      const workshop = await Workshops.find();
-      res.status(200).json({
-        status: 'success',
-        results: workshop.length,
-        data: {
-          workshop: workshop,
-        },
-      });
-    } catch (err) {
-      console.log(`Error: ${err}`);
+  try {
+    const workshop = await Workshops.find();
+    res.status(200).json({
+      status: 'success',
+      results: workshop.length,
+      data: {
+        workshop: workshop,
+      },
+    });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get workshop',
+    });
+  }
+};
+
+exports.createNewWorkshop = async (req, res) => {
+  try {
+    const newWorkshop = await Workshops.create(req.body);
+    res.status(200).json({
+      status: 'success',
+      message: 'Workshop launched successfully',
+      data: {
+        workshop: newWorkshop,
+      },
+    });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to launch new workshop',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+};
+
+exports.getWorkshopWithCategory = async (req, res) => {
+  try {
+    const workID = await Workshops.findOne({
+      "title": { $regex: '^' + req.params.title, $options: 'i' },
+    }).exec();
+    if (!workID) {
       res.status(400).json({
         status: 'Fail',
-        message: 'Failed to get workshop',
+        message: 'No workshop found',
       });
     }
-  };
-  
-  exports.createNewWorkshop = async (req, res) => {
-    try {
-      const newWorkshop = await Workshops.create(req.body);
-      res.status(200).json({
-        status: 'success',
-        message: 'Workshop launched successfully',
-        data: {
-          workshop: newWorkshop,
-        },
-      });
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      res.status(400).json({
-        status: 'Fail',
-        message: 'Failed to launch new workshop',
-        error: `${err.name} ${err.message}`,
-      });
-    }
-  };
-  
-  exports.getWorkshopWithCategory = async (req, res) => {
-    try {
-      const workID = await Workshops.findOne({
-        "title": { $regex: '^' + req.params.title, $options: 'i' },
-      }).exec();
-      if (!workID) {
-        res.status(400).json({
-          status: 'Fail',
-          message: 'No workshop found',
-        });
-      }
+    else {
       res.status(200).json({
         status: 'success',
         results: workID.length,
@@ -177,65 +183,66 @@ exports.getWorkshop = async (req, res) => {
           workshop: workID,
         },
       });
-      
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      res.status(400).json({
-        status: 'Fail',
-        message: 'Failed to get workshop',
-        error: `${err.name} ${err.message}`,
-      });
     }
-  };
-  
-  exports.updateWorkshop = async (req, res) => {
-    try {
-      const work = await Workshops.findByIdAndUpdate(
-        req.params.title,
-        req.body,
-        {
-          new: true,
-          runValidators: true,
-        }
-      );
-      res.status(201).json({
-        status: 'success',
-        message: 'Workshop updated',
-        data: {
-          workshop: work,
-        },
-      });
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      res.status(400).json({
-        status: 'Fail',
-        message: 'Failed to update workshop',
-      });
-    }
-  };
-  exports.deleteWorkshop = async (req, res) => {
-    try {
-      const delWork = await Workshop.findOneAndDelete(req.params.title);
-      if (!delWork) {
-        res.status(400).json({
-          status: 'Fail',
-          message: 'No workshop found',
-        });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get workshop',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+};
+
+exports.updateWorkshop = async (req, res) => {
+  try {
+    const work = await Workshops.findByIdAndUpdate(
+      req.params.title,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
       }
-  
+    );
+    res.status(201).json({
+      status: 'success',
+      message: 'Workshop updated',
+      data: {
+        workshop: work,
+      },
+    });
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to update workshop',
+    });
+  }
+};
+exports.deleteWorkshop = async (req, res) => {
+  try {
+    const delWork = await Workshop.findOneAndDelete(req.params.title);
+    if (!delWork) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No workshop found',
+      });
+    }
+    else {
       res.status(204).json({
         status: 'success',
         message: 'Workshop deleted successfully',
       });
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      res.status(400).json({
-        status: 'Fail',
-        message: 'Failed to delete workshop',
-        error: `${err.name} ${err.message}`,
-      });
     }
-  };
+  } catch (err) {
+    console.log(`Error: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to delete workshop',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+};
 
 
 //=======Supervision=========//
@@ -259,7 +266,7 @@ exports.getSupervision = async (req, res) => {
   }
 };
 
-exports.createNewSupervision = async(req, res) => {
+exports.createNewSupervision = async (req, res) => {
   try {
     const newSupervision = await Supervision.create(req.body);
     res.status(200).json({
@@ -279,7 +286,7 @@ exports.createNewSupervision = async(req, res) => {
   }
 };
 
-exports.getSupervisionWithId= async (req, res) => {
+exports.getSupervisionWithId = async (req, res) => {
   try {
     const supervisionID = await Supervision.findOne({
       "title": { $regex: '^' + req.params.title, $options: 'i' },
@@ -290,14 +297,15 @@ exports.getSupervisionWithId= async (req, res) => {
         message: 'No supervision found',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      results: supervision.length,
-      data: {
-        supervisionID,
-      },
-    });
-    
+    else {
+      res.status(200).json({
+        status: 'success',
+        results: supervision.length,
+        data: {
+          supervisionID,
+        },
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -308,9 +316,9 @@ exports.getSupervisionWithId= async (req, res) => {
   }
 };
 
-exports.updateSupervision = async(req, res) => {
+exports.updateSupervision = async (req, res) => {
   try {
-    const supervisionUp= await Supervision.findByIdAndUpdate(
+    const supervisionUp = await Supervision.findByIdAndUpdate(
       req.params.title,
       req.body,
       {
@@ -334,7 +342,7 @@ exports.updateSupervision = async(req, res) => {
   }
 };
 
-exports.deleteSupervision = async(req, res) => {
+exports.deleteSupervision = async (req, res) => {
   try {
     const delSup = await Supervision.findOneAndDelete(req.params.title);
     if (!delSup) {
@@ -343,11 +351,12 @@ exports.deleteSupervision = async(req, res) => {
         message: 'No supervision Found',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Supervision Deleted Successfully',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Supervision Deleted Successfully',
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({

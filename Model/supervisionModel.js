@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const supervisionSchema = mongoose.Schema({
-    type : String,
+    
 
     FinalYearProject: {
         type: String,
@@ -40,6 +40,11 @@ const supervisionSchema = mongoose.Schema({
     MSThesis: {
         type: String,
         required: [true, 'Please provide the course details.'],
+
+        Id : {
+            type: Number,
+            unique : [true, 'Id must be unique']
+        },
 
         title : {
             type: String,

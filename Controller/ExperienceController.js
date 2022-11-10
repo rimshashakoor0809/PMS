@@ -52,13 +52,15 @@ exports.getIndustryWithTitle = async (req, res) => {
         message: 'No Industry Found😞',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        industryID,
-      },
-    });
-    
+    else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          industryID,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -102,11 +104,12 @@ exports.deleteIndustry = async (req, res) => {
         message: 'No Industry Found😞',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Industry Deleted Successfully👍',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Industry Deleted Successfully👍',
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -136,7 +139,7 @@ exports.getFreelance = async (req, res) => {
     });
   }
 };
-exports.createNewFreelance = async(req, res) => {
+exports.createNewFreelance = async (req, res) => {
   try {
     const newFreelance = await Freelance.create(req.body);
     res.status(200).json({
@@ -166,13 +169,15 @@ exports.getFreelanceWithPlatform = async (req, res) => {
         message: 'No Freelance Found😞',
       });
     }
-    res.status(200).json({
-      status: 'success',
-      data: {
-        freelanceID,
-      },
-    });
-    
+    else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          freelanceID,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -216,11 +221,12 @@ exports.deleteFreelance = async (req, res) => {
         message: 'No Freelance Found😞',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Freelance Deleted Successfully👍',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Freelance Deleted Successfully👍',
+      });
+    }
   } catch (err) {
     console.log(`Error: ${err}`);
     res.status(400).json({
@@ -233,115 +239,118 @@ exports.deleteFreelance = async (req, res) => {
 
 //Management Controllers
 exports.getManagement = async (req, res) => {
-    try {
-        const manage = await Manage.find();
-        res.status(200).json({
-          status: 'success',
-          results: manage.length,
-          data: {
-            management: manage,
-          },
-        });
-      } catch (err) {
-        console.log(`Error Found: ${err}`);
-        res.status(400).json({
-          status: 'Fail',
-          message: 'Failed to find the Management',
-        });
-      }
+  try {
+    const manage = await Manage.find();
+    res.status(200).json({
+      status: 'success',
+      results: manage.length,
+      data: {
+        management: manage,
+      },
+    });
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to find the Management',
+    });
+  }
 };
 exports.createNewManagement = async (req, res) => {
-    try {
-        const newManagement = await Management.create(req.body);
-        res.status(200).json({
-          status: 'success',
-          message: 'Management added successfully👌',
-          data: {
-            management: newManagement,
-          },
-        });
-      } catch (err) {
-        console.log(`Error Found: ${err}`);
-        res.status(400).json({
-          status: 'Fail',
-          message: 'Failed to create new management😞.',
-          error: `${err.name} ${err.message}`,
-        });
-      }
+  try {
+    const newManagement = await Management.create(req.body);
+    res.status(200).json({
+      status: 'success',
+      message: 'Management added successfully👌',
+      data: {
+        management: newManagement,
+      },
+    });
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to create new management😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
 
 };
 exports.getManagementWithInstituition = async (req, res) => {
-    try {
-        const manageID = await Management.findOne({
-          "title": { $regex: '^' + req.params.title, $options: 'i' },
-        }).exec();
-        if (!manageID) {
-          res.status(400).json({
-            status: 'Fail',
-            message: 'No Management Found😞',
-          });
-        }
-        res.status(200).json({
-          status: 'success',
-          data: {
-            manageID,
-          },
-        });
-        
-      } catch (err) {
-        console.log(`Error❤️‍🔥: ${err}`);
-        res.status(400).json({
-          status: 'Fail',
-          message: 'Failed to get Management😞.',
-          error: `${err.name} ${err.message}`,
-        });
-      }
+  try {
+    const manageID = await Management.findOne({
+      "title": { $regex: '^' + req.params.title, $options: 'i' },
+    }).exec();
+    if (!manageID) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No Management Found😞',
+      });
+    }
+    else {
+      res.status(200).json({
+        status: 'success',
+        data: {
+          manageID,
+        },
+      });
+    }
+
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get Management😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
 };
 exports.updateManagement = async (req, res) => {
-    try {
-        const upmanage = await Management.findByIdAndUpdate(
-          req.params.title,
-          req.body,
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        res.status(201).json({
-          status: 'success',
-          message: 'Management updated.👌',
-          data: {
-            management: upmanage,
-          },
-        });
-      } catch (err) {
-        console.log(`Error❤️‍🔥: ${err}`);
-        res.status(400).json({
-          status: 'Fail',
-          message: 'Failed to update management😞.',
-        });
+  try {
+    const upmanage = await Management.findByIdAndUpdate(
+      req.params.title,
+      req.body,
+      {
+        new: true,
+        runValidators: true,
       }
+    );
+    res.status(201).json({
+      status: 'success',
+      message: 'Management updated.👌',
+      data: {
+        management: upmanage,
+      },
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to update management😞.',
+    });
+  }
 };
 exports.deleteManagement = async (req, res) => {
-    try {
-        const delmanage = await Management.findOneAndDelete(req.params.title);
-        if (!delCert) {
-          res.status(400).json({
-            status: 'Fail',
-            message: 'No management Found😞',
-          });
-        }
-    
-        res.status(204).json({
-          status: 'success',
-          message: 'Management Deleted Successfully👍',
-        });
-      } catch (err) {
-        console.log(`Error❤️‍🔥: ${err}`);
-        res.status(400).json({
-          status: 'Fail',
-          message: 'Failed to delete management😞.',
-          error: `${err.name} ${err.message}`,
-        });
-      }
+  try {
+    const delmanage = await Management.findOneAndDelete(req.params.title);
+    if (!delCert) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No management Found😞',
+      });
+    }
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Management Deleted Successfully👍',
+      });
+    }
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to delete management😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
 };
