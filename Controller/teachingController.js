@@ -171,7 +171,7 @@ exports.getWorkshop = async (req, res) => {
       }
       res.status(200).json({
         status: 'success',
-        results: workshop.length,
+        results: workID.length,
         data: {
           workshop: workID,
         },
@@ -189,7 +189,7 @@ exports.getWorkshop = async (req, res) => {
   
   exports.updateWorkshop = async (req, res) => {
     try {
-      const work = await Workshop.findByIdAndUpdate(
+      const work = await Workshops.findByIdAndUpdate(
         req.params.title,
         req.body,
         {
@@ -292,7 +292,7 @@ exports.getSupervisionWithCategory = async (req, res) => {
       status: 'success',
       results: supervision.length,
       data: {
-        supervision: supervisionID,
+        supervisionID,
       },
     });
     
