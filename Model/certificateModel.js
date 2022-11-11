@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const certSchema = mongoose.Schema({
+  
   title: {
     type: String,
     unique: [true, 'Title must be unique'],
