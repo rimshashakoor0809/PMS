@@ -6,20 +6,20 @@ var Schema = mongoose.Schema;
 var adminS = new Schema({
     Email:{
         type: String,
-        required: [true, "Please Enter your Email Address"],
+        required: [true, "Please Enter an Email Address"],
         index: { unique: true }
     },
     Name:{
         type: String,
-        required: [true, "Please Enter your Name"]
+        required: [true, "Please Enter a Name"]
     },
     Image:{
-        type: Image,
-        required: [true, "Please Enter your Image"]
+        type: String,
+        required: [true, "Please Enter an Image"]
     },
     Password:{
         type: String,
-        required: [true, "Please Enter your Name"]
+        required: [true, "Please Enter a Password"]
     },
 })
 

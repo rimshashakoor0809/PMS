@@ -1,5 +1,5 @@
 const { query } = require('express');
-const admin = require('../Model/adminModel');
+const Admin = require('../Model/adminModel');
 const Blog = require('../Model/BlogModel');
 const BlogWriter = require('../Model/BlogWriterModel');
 
@@ -23,7 +23,7 @@ exports.getLogin = async (req, res) => {
 //checkLogin
 exports.checkLogin = async (req, res) => {
     try {
-      const cred = await admin.find({Email: req.params.email, Password: req.params.email});
+      const cred = await Admin.find({Email: req.params.email, Password: req.params.email});
       res.status(200).json({
         status: 'success',
       });
@@ -63,7 +63,7 @@ exports.checkLogin = async (req, res) => {
     };
 
     //getBlogsbyTitle
-    exports.getBlogByTitle = async (req, res) => {
+    exports.getBlogsbyTitle = async (req, res) => {
         try {
           const BlogTitle = await Blog.findOne({
             "title": { $regex: '^' + req.params.title, $options: 'i' },
@@ -166,10 +166,14 @@ exports.checkLogin = async (req, res) => {
         }
     };
 
+    //getWriters
+    exports.getWriters = async (req, res) => {res.status(200)}
+
     //getWritersbyName
-    
+    exports.getWritersbyName = async (req, res) => {res.status(200)}
 
     //hireWritersbyName
+    exports.hireWritersbyName = async (req, res) => {res.status(200)}
 
 //}
 //else{

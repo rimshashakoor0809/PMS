@@ -6,7 +6,7 @@ const educationRouter = require('./Route/educationRoute');
 const blogRouter = require('./Route/blogRoute');
 const teachingRouter = require('./Route/teachingRoute');
 const experienceRouter = require('./Route/ExperienceRoute');
-const adminRouter = require('./Route/adminRouter');
+const adminRouter = require('./Route/adminRoute');
 
 
 dotenv.config({ path: './config.env' });
