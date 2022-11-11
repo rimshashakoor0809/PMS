@@ -43,15 +43,15 @@ exports.createNewBlog = async (req, res) => {
   }
 };
 
-exports.getBlogByTitle = async (req, res) => {
+exports.getBlogById = async (req, res) => {
   try {
     const BlogTitle = await Blog.findOne({
-      "title": { $regex: '^' + req.params.title, $options: 'i' },
+      "_id":req.params.id
     }).exec();
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
     else {
@@ -76,46 +76,55 @@ exports.getBlogByTitle = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
   try {
-    const UBlog = await Blog.findOneAndUpdate(
-      req.params.title,
+    const Ublog = await Blog.findOneAndUpdate({
+      "_id":req.params.id},
       req.body,
       {
         new: true,
         runValidators: true,
-      }
-    );
-    res.status(201).json({
-      status: 'success',
-      message: 'Blog Successfully Updated',
-      data: {
-        blog: UBlog,
-      },
-    });
+      }).exec();
+    if (!Ublog) {
+      res.status(400).json({
+        status: 'Fail',
+        message: `Blog with title ${req.params.id} not Found`,
+      });
+    }
+    else {
+      res.status(201).json({
+        status: 'success',
+        message: 'Blog Successfully Updated',
+        data: {
+          blog: Ublog,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
       status: 'Fail',
-      message: 'Failed to update Blog.',
+      message: 'Failed To Find Blog.',
+      error: `${err.name} ${err.message}`,
     });
   }
 };
+
 exports.deleteBlog = async (req, res) => {
   try {
     const delBlog = await Blog.findOneAndDelete({
-      "title": { $regex: '^' + req.params.title, $options: 'i' },
+      "_id":req.params.id,
     }).exec();
     if (!delBlog) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
-    else {
-      res.status(200).json({
+    res.status(204).json({
         status: 'success',
-        message: `Blog with title ${req.params.title} Deleted Successfully`,
+        message: `Blog with title ${req.params.id} Deleted Successfully`,
       });
-    }
+    
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
@@ -125,3 +134,29 @@ exports.deleteBlog = async (req, res) => {
     });
   }
 };
+
+exports.publishBlog = async (req, res) => {
+  try {
+    const published = await Blog.aggregate([
+      {
+        $match: { Status: "Approved" },
+      },
+    ]);
+    res.status(201).json({
+      status: 'success',
+      message: 'Published Blogs😃',
+      data: {
+        publish: published,
+      },
+    });
+    
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed To Find Published Blog.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+
+}

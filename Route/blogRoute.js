@@ -9,9 +9,11 @@ router
   .post(blogController.createNewBlog);
 
 router
-  .route('/blog/:title')
-  .get(blogController.getBlogByTitle)
+  .route('/blog/:id')
+  .get(blogController.getBlogById)
   .patch(blogController.updateBlog)
   .delete(blogController.deleteBlog);
+
+router.route('/publishblog').get(blogController.publishBlog);
 
 module.exports = router;
