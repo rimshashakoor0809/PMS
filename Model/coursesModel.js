@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const courseSchema = mongoose.Schema({
     
+//=============Undergraduate Courses============//
+
     UnderGraduate: {
         type: Object,
 
@@ -38,6 +40,8 @@ const courseSchema = mongoose.Schema({
         }
 
     },
+
+//=============Graduate Courses============//
 
     Graduate: {
         type: Object,

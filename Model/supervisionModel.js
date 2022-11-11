@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const supervisionSchema = mongoose.Schema({
     
-
+//Final Year Project=========//
     FinalYearProject: {
         type: Object,
 
@@ -37,6 +37,7 @@ const supervisionSchema = mongoose.Schema({
 
     },
 
+//===========MS Thesis===========//
     MSThesis: {
         type: Object,
 
