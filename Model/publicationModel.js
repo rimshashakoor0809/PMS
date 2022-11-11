@@ -34,19 +34,6 @@ const publicationSchema = mongoose.Schema({
     },
     citation: {
       type: Number,
-  },
-  i10Index: {
-    type: Number,
-    validate: {
-        // this only points to current doc on NEW Document creation.
-      validator: function () {
-        if (this.citation >= 10) {
-          default: this.citation;
-        }
-          return default;
-        }
-
-      }
   }
     
 });
