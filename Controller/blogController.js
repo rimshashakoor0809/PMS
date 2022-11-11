@@ -43,15 +43,15 @@ exports.createNewBlog = async (req, res) => {
   }
 };
 
-exports.getBlogByTitle = async (req, res) => {
+exports.getBlogById = async (req, res) => {
   try {
     const BlogTitle = await Blog.findOne({
-      "title": { $regex: '^' + req.params.title, $options: 'i' }
+      "_id":req.params.id
     }).exec();
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
     else {
@@ -77,7 +77,7 @@ exports.getBlogByTitle = async (req, res) => {
 exports.updateBlog = async (req, res) => {
   try {
     const Ublog = await Blog.findOneAndUpdate({
-      "title": { $regex: '^' + req.params.title, $options: 'i' }},
+      "_id":req.params.id},
       req.body,
       {
         new: true,
@@ -86,7 +86,7 @@ exports.updateBlog = async (req, res) => {
     if (!Ublog) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
     else {
@@ -112,18 +112,18 @@ exports.updateBlog = async (req, res) => {
 exports.deleteBlog = async (req, res) => {
   try {
     const delBlog = await Blog.findOneAndDelete({
-      "title": { $regex: '^' + req.params.title, $options: 'i' },
+      "_id":req.params.id,
     }).exec();
     if (!delBlog) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
     else {
       res.status(200).json({
         status: 'success',
-        message: `Blog with title ${req.params.title} Deleted Successfully`,
+        message: `Blog with title ${req.params.id} Deleted Successfully`,
       });
     }
   } catch (err) {
