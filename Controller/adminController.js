@@ -26,6 +26,7 @@ exports.checkLogin = async (req, res) => {
       const cred = await Admin.find({Email: req.params.email, Password: req.params.email});
       res.status(200).json({
         status: 'success',
+        message: 'Login Successful',
       });
       token = Math.random()*10;
       time = Date.now();
@@ -71,7 +72,7 @@ exports.checkLogin = async (req, res) => {
           if (!BlogTitle) {
             res.status(400).json({
               status: 'Fail',
-              message: `Blog with title ${req.params.title} not Found`,
+              message: `Blog with title /${req.params.title}/ not Found`,
             });
           }
           else {
