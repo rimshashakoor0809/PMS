@@ -10,22 +10,22 @@ router
 
 router
     .route('/blogs')
-    .get(adminController.getBlogs);
+    .get(adminController.getBlog);
 
 router
-    .route('/blogs/:title')
-    .get(adminController.getBlogsbyTitle)
-    .put(adminController.setBlogsbyTitle)
-    .delete(adminController.deleteBlogsbyTitle);
+    .route('/blogs/:id')
+    .get(adminController.getBlogById)
+    .put(adminController.setBlog)
+    .delete(adminController.deleteBlog);
 
 router
     .route('/blogwriters')
     .get(adminController.getWriters)
 
 router
-    .route('/blogwriters/:name')
-    .get(adminController.getWritersbyName)
-    .post(adminController.hireWritersbyName);
+    .route('/blogwriters/:id')
+    .get(adminController.getWritersbyID)
+    .post(adminController.hireWritersbyID);
 
 module.exports = router;
 
