@@ -7,19 +7,19 @@ var adminS = new Schema({
     Email:{
         type: String,
         required: [true, "Please Enter an Email Address"],
-        index: { unique: true }
+        index: { unique: true },
     },
     Name:{
         type: String,
-        required: [true, "Please Enter a Name"]
+        required: [true, "Please Enter a Name"],
     },
     Image:{
         type: String,
-        required: [true, "Please Enter an Image"]
+        required: [true, "Please Enter an Image"],
     },
     Password:{
         type: String,
-        required: [true, "Please Enter a Password"]
+        required: [true, "Please Enter a Password"],
     },
 })
 

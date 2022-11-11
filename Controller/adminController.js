@@ -176,6 +176,8 @@ exports.checkLogin = async (req, res) => {
     //hireWritersbyName
     exports.hireWritersbyName = async (req, res) => {res.status(200)}
 
+    //userprofiling
+
 //}
 //else{
 //    token = null;
