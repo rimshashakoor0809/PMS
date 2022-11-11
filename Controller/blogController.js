@@ -135,3 +135,29 @@ exports.deleteBlog = async (req, res) => {
     });
   }
 };
+
+exports.publishBlog = async (req, res) => {
+  try {
+    const published = await Blog.aggregate([
+      {
+        $match: { Status: "Approved" },
+      },
+    ]);
+    res.status(201).json({
+      status: 'success',
+      message: 'Published Blogs😃',
+      data: {
+        publish: published,
+      },
+    });
+    
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed To Find Published Blog.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+
+}

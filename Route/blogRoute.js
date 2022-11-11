@@ -14,4 +14,6 @@ router
   .patch(blogController.updateBlog)
   .delete(blogController.deleteBlog);
 
+router.route('/publishblog').get(blogController.publishBlog);
+
 module.exports = router;
