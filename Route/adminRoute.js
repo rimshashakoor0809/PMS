@@ -28,3 +28,5 @@ router
     .post(adminController.hireWritersbyName);
 
 module.exports = router;
+
+//view users
