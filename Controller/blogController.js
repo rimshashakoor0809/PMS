@@ -120,12 +120,11 @@ exports.deleteBlog = async (req, res) => {
         message: `Blog with title ${req.params.id} not Found`,
       });
     }
-    else {
-      res.status(200).json({
+    res.status(204).json({
         status: 'success',
         message: `Blog with title ${req.params.id} Deleted Successfully`,
       });
-    }
+    
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
