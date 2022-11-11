@@ -9,8 +9,8 @@ router
   .post(educationController.createNewDegree);
 
 router
-  .route('/degree/:type')
-  .get(educationController.getDegreeWithType)
+  .route('/degree/:id')
+  .get(educationController.getDegreeWithID)
   .patch(educationController.updateDegree)
   .delete(educationController.deleteDegree);
 
@@ -21,10 +21,21 @@ router
   .post(educationController.createNewCertificate);
 
 router
-  .route('/certificate/:title')
-  .get(educationController.getCertificateWithTitle)
+  .route('/certificate/:id')
+  .get(educationController.getCertificateWithID)
   .patch(educationController.updateCertificate)
   .delete(educationController.deleteCertificate);
+
+router
+  .route('/publication')
+  .get(educationController.getPublication)
+  .post(educationController.createNewPublication);
+
+router
+  .route('/publication/:id')
+  .get(educationController.getPublicationWithID)
+  .patch(educationController.updatePublication)
+  .delete(educationController.deletePublication);
 
 
 module.exports = router;

@@ -1,34 +1,30 @@
 const mongoose = require('mongoose');
+const Publication = require('./publicationModel');
 
-const degreeSchema = mongoose.Schema(
-  {
-    name: {
-      type: String,
-      required: [true, 'Please provide degree name.']
+const degreeSchema = mongoose.Schema({
+  name: {
+    type: String,
+    required: [true, 'Please provide degree name.'],
+    enum: {
+      values: ['Bachelors', 'Masters', 'PHD', 'Associate'],
+      message: 'Degree is either: Bachelors, Masters, PHD or Associate',
     },
-    degreeType: {
-      type: String,
-      required: [true, 'Please provide degree type.'],
-      enum: {
-        values: ['BS', 'MS', 'PHD', 'AS'],
-        message: 'Degree is either: BS, MS, PHD or AS',
-      }
+  },
+  degreeMajor: {
+    type: String,
+    required: [true, 'Please provide the program.'],
+  },
+  institute: {
+    type: String,
+    required: [true, 'Please provide the institute name.'],
+  },
+  publications: {
+    pid: {
+      type: mongoose.Types.ObjectId,
+      ref: 'Publication',
     },
-    degreeMajor: {
-      type: String,
-      required: [true, 'Please provide the program.']
-    },
-    institute: {
-      type: String,
-      required: [true, 'Please provide the institute name.']
-    },
-    publications: {
-      pid: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Degree'
-      }
-    }
-  })
+  },
+});
 
 const Degree = mongoose.model('Degree', degreeSchema);
 module.exports = Degree;
