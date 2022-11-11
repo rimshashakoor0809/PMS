@@ -88,7 +88,7 @@ exports.updateBlog = async (req, res) => {
       status: 'success',
       message: 'Blog Successfully Updated',
       data: {
-        blod: UBlog,
+        blog: UBlog,
       },
     });
   } catch (err) {
@@ -101,24 +101,26 @@ exports.updateBlog = async (req, res) => {
 };
 exports.deleteBlog = async (req, res) => {
   try {
-    const delBlog = await Blog.findOneAndDelete(req.params.title);
+    const delBlog = await Blog.findOneAndDelete({
+      "title": { $regex: '^' + req.params.title, $options: 'i' },
+    }).exec();
     if (!delBlog) {
       res.status(400).json({
         status: 'Fail',
         message: `Blog with title ${req.params.title} not Found`,
       });
     }
-    else{
-      res.status(204).json({
+    else {
+      res.status(200).json({
         status: 'success',
-        message: 'Blog Deleted Successfully',
+        message: `Blog with title ${req.params.title} Deleted Successfully`,
       });
     }
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
       status: 'Fail',
-      message: 'Failed to delete Blog.',
+      message: 'Failed To delete Blog.',
       error: `${err.name} ${err.message}`,
     });
   }
