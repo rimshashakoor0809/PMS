@@ -179,7 +179,7 @@ exports.getCertificateWithID = async (req, res) => {
     res.status(200).json({
       status: 'success',
       data: {
-        certificate: certID,
+        certID,
       },
     });
     
@@ -233,11 +233,12 @@ exports.deleteCertificate = async (req, res) => {
         message: 'No certificate Found😞',
       });
     }
-
-    res.status(204).json({
-      status: 'success',
-      message: 'Certificate Deleted Successfully👍',
-    });
+    else {
+      res.status(204).json({
+        status: 'success',
+        message: 'Certificate Deleted Successfully👍',
+      });
+    }
   } catch (err) {
     console.log(`Error❤️‍🔥: ${err}`);
     res.status(400).json({
@@ -247,6 +248,121 @@ exports.deleteCertificate = async (req, res) => {
     });
   }
 };
+
+
+// **************** PUBLICATION HANDLER *****************
+
+exports.getPublication = async (req, res) => {
+  try {
+    const publication = await Publication.find();
+    res.status(200).json({
+      status: 'success',
+      results: publication.length,
+      data: {
+        publication: publication,
+      },
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get publication😞.',
+    });
+  }
+}
+exports.createNewPublication = async (req, res) => {
+  try {
+    const newPublication = await Publication.create(req.body);
+    res.status(200).json({
+      status: 'success',
+      message: 'Published papers added successfully👌',
+      data: {
+        Publication: newPublication,
+      },
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to create new Published papers😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+}
+exports.getPublicationWithID = async (req, res) => {
+  try {
+    const publicationID = await Publication.findById(req.params.id);
+    if (!publicationID) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No Publication Found😞',
+      });
+    }
+    res.status(200).json({
+      status: 'success',
+      data: {
+        Publication: publicationID,
+      },
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to get published papers😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+}
+exports.updatePublication = async (req, res) => {
+  try {
+    const pub = await Publication.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    if (!pub) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No Publication Found😞',
+      });
+    }
+    res.status(201).json({
+      status: 'success',
+      message: 'Publication updated.👌',
+      data: {
+        certificate: pub,
+      },
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to update Publication😞.',
+    });
+  }
+}
+exports.deletePublication = async (req, res) => {
+  try {
+    const pub= await Publication.findByIdAndDelete(req.params.id);
+    if (!pub) {
+      res.status(400).json({
+        status: 'Fail',
+        message: 'No Publication Found😞',
+      });
+    }
+
+    res.status(204).json({
+      status: 'success',
+      message: 'Publication Deleted Successfully👍',
+    });
+  } catch (err) {
+    console.log(`Error❤️‍🔥: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed to delete Publication😞.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+}
 
 
 // **************** PUBLICATION HANDLER *****************
