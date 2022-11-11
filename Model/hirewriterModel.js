@@ -11,7 +11,7 @@ var hireWriterS = new Schema({
         type: String,
         required: [true, "Please Enter a Blog Description"],
     },
-    Hire:{
+    BlogWriter:{
         type: mongoose.Types.ObjectId,
         ref: 'BlogWriter',
         required: [true, "Please Enter the name of Blog Writer you want to Hire"],
