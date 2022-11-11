@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 const courseSchema = mongoose.Schema({
     
+//=============Undergraduate Courses============//
+
     UnderGraduate: {
-        type: String,
-        required: [true, 'Please provide the course details.'],
+        type: Object,
 
         title : {
             type: String,
@@ -40,9 +41,10 @@ const courseSchema = mongoose.Schema({
 
     },
 
+//=============Graduate Courses============//
+
     Graduate: {
-        type: String,
-        required: [true, 'Please provide the course details.'],
+        type: Object,
 
         title : {
             type: String,
