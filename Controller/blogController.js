@@ -43,15 +43,15 @@ exports.createNewBlog = async (req, res) => {
   }
 };
 
-exports.getBlogByTitle = async (req, res) => {
+exports.getBlogById = async (req, res) => {
   try {
     const BlogTitle = await Blog.findOne({
-      "title": { $regex: '^' + req.params.title, $options: 'i' },
+      "_id":req.params.id
     }).exec();
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
     else {
@@ -76,49 +76,61 @@ exports.getBlogByTitle = async (req, res) => {
 
 exports.updateBlog = async (req, res) => {
   try {
-    const UBlog = await Blog.findOneAndUpdate(
-      req.params.title,
+    const Ublog = await Blog.findOneAndUpdate({
+      "_id":req.params.id},
       req.body,
       {
         new: true,
         runValidators: true,
-      }
-    );
-    res.status(201).json({
-      status: 'success',
-      message: 'Blog Successfully Updated',
-      data: {
-        blod: UBlog,
-      },
-    });
+      }).exec();
+    if (!Ublog) {
+      res.status(400).json({
+        status: 'Fail',
+        message: `Blog with title ${req.params.id} not Found`,
+      });
+    }
+    else {
+      res.status(201).json({
+        status: 'success',
+        message: 'Blog Successfully Updated',
+        data: {
+          blog: Ublog,
+        },
+      });
+    }
+
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
       status: 'Fail',
-      message: 'Failed to update Blog.',
+      message: 'Failed To Find Blog.',
+      error: `${err.name} ${err.message}`,
     });
   }
 };
+
 exports.deleteBlog = async (req, res) => {
   try {
-    const delBlog = await Blog.findOneAndDelete(req.params.title);
+    const delBlog = await Blog.findOneAndDelete({
+      "_id":req.params.id,
+    }).exec();
     if (!delBlog) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.title} not Found`,
+        message: `Blog with title ${req.params.id} not Found`,
       });
     }
-    else{
-      res.status(204).json({
+    else {
+      res.status(200).json({
         status: 'success',
-        message: 'Blog Deleted Successfully',
+        message: `Blog with title ${req.params.id} Deleted Successfully`,
       });
     }
   } catch (err) {
     console.log(`Error Found: ${err}`);
     res.status(400).json({
       status: 'Fail',
-      message: 'Failed to delete Blog.',
+      message: 'Failed To delete Blog.',
       error: `${err.name} ${err.message}`,
     });
   }
