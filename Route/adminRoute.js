@@ -27,6 +27,16 @@ router
     .get(adminController.getWritersbyID)
     .post(adminController.hireWritersbyID);
 
+router
+    .route('/user')
+    .get(adminController.getUser)
+  
+ router
+    .route('/user/:name')
+    .get(adminController.getUserbyName)
+    .patch(adminController.updateUser)
+    .delete(adminController.deleteUser);
+
 module.exports = router;
 
 //userprofiling

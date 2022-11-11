@@ -1,10 +1,12 @@
 const { query } = require('express');
+var mongoose = require('mongoose');
 const Admin = require('../Model/adminModel');
 const Blog = require('../Model/BlogModel');
 const BlogWriter = require('../Model/BlogWriterModel');
 const HireWriter = require('../Model/hirewriterModel');
 
 const blogController = require('./../Controller/blogController');
+const userController = require('./../Controller/userController');
 
 var token;
 var time;
@@ -116,7 +118,7 @@ exports.checkLogin = async (req, res) => {
         const hireWriter = await HireWriter.create({
           'BlogTitle': req.params.BlogTitle,
           'BlogDesc': req.params.BlogDesc,
-          'BlogWriter': req.params.id,
+          'BlogWriter': mongoose.Types.ObjectId(req.params.id),
           'Status': req.params.BlogWriter,
         });
         res.status(200).json({
@@ -136,7 +138,17 @@ exports.checkLogin = async (req, res) => {
       }
     }
 
-    //userprofiling
+    //getUser
+    exports.getUser = userController.getUser;
+
+    //getUserbyName
+    exports.getUserbyName = userController.getUserbyName;
+
+    //updateUser
+    exports.updateUser = userController.updateUser;
+
+    //deleteUser
+    exports.deleteUser = userController.deleteUser;
 
 //}
 //else{
