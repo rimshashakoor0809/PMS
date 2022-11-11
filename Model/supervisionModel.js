@@ -3,7 +3,7 @@ const supervisionSchema = mongoose.Schema({
     
 
     FinalYearProject: {
-        type: String,
+        type: Object,
 
         Id : {
             type: Number,
@@ -27,7 +27,7 @@ const supervisionSchema = mongoose.Schema({
 
         students: {
             type: String,
-            required: [true, 'Please provide the course author name.']
+            required: [true, 'Please provide the students names.']
         },
 
         tools: {
@@ -38,8 +38,7 @@ const supervisionSchema = mongoose.Schema({
     },
 
     MSThesis: {
-        type: String,
-        required: [true, 'Please provide the course details.'],
+        type: Object,
 
         Id : {
             type: Number,

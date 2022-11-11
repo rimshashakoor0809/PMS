@@ -2,8 +2,7 @@ const mongoose = require('mongoose');
 const courseSchema = mongoose.Schema({
     
     UnderGraduate: {
-        type: String,
-        required: [true, 'Please provide the course details.'],
+        type: Object,
 
         title : {
             type: String,
@@ -41,8 +40,7 @@ const courseSchema = mongoose.Schema({
     },
 
     Graduate: {
-        type: String,
-        required: [true, 'Please provide the course details.'],
+        type: Object,
 
         title : {
             type: String,
