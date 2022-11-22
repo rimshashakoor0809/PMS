@@ -67,7 +67,7 @@ const supervisionSchema = mongoose.Schema({
         },
 
         Duration: {
-            type: TimeRanges,
+            type: String,
             required: [true, 'Duration must be defined'],
         },
 
