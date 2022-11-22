@@ -133,18 +133,10 @@ exports.checkLogin = async (req, res) => {
     //hireWritersbyID
     exports.hireWritersbyID = async (req, res) => {
       try {
-        const hireWriter = await HireWriter.create({
-          'BlogTitle': req.params.BlogTitle,
-          'BlogDesc': req.params.BlogDesc,
-          'BlogWriter': mongoose.Types.ObjectId(req.params.id),
-          'Status': req.params.BlogWriter,
-        });
+        const hireWriter = await HireWriter.create(req.body);
         res.status(200).json({
           status: 'Success',
-          message: 'Writer Request Sent',
-          data: {
-            blog: newBlog,
-          },
+          message: 'Writer Request Sent'
         });
       } catch (err) {
         console.log(`Error Found: ${err}`);
