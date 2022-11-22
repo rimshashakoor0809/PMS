@@ -28,7 +28,7 @@ exports.getLogin = async (req, res) => {
 //checkLogin
 exports.checkLogin = async (req, res) => {
     try {
-      const cred = await Admin.findOne({Email: req.params.email, Password: req.params.email});
+      const cred = await Admin.findOne({Email: req.body.Email, Password: req.body.Password});
       res.status(200).json({
         status: 'success',
         message: `Login Successful for ${cred}`,
@@ -63,12 +63,12 @@ exports.checkLogin = async (req, res) => {
     //getWriters
     exports.getWriters = async (req, res) => {
         try {
-            const BlogWriter = await BlogWriter.find();
+            const blogWriter = await BlogWriter.find();
             res.status(200).json({
                 status: 'success',
-                results: BlogWriter.length,
+                results: blogWriter.length,
                 data: {
-                    blog: BlogWriter,
+                    BlogWriters: blogWriter,
                 },
             });
         } catch (err) {
@@ -80,6 +80,24 @@ exports.checkLogin = async (req, res) => {
         }
     };
 
+    //CreateWriters
+    exports.addWriters = async (req, res) => {
+      try {
+        const newWriter = await BlogWriter.create(req.body);
+        res.status(200).json({
+          status: 'Success',
+          message: 'Blog Writer added Successfully',
+        });
+      } catch (err) {
+        console.log(`Error Found: ${err}`);
+        res.status(400).json({
+          status: 'Fail',
+          message: 'Unable to add New Writer.',
+          error: `${err.name} ${err.message}`,
+        });
+      }
+    };
+
     //getWritersbyID
     exports.getWritersbyID = async (req, res) => {
       try {
@@ -89,15 +107,15 @@ exports.checkLogin = async (req, res) => {
         if (!WriterID) {
           res.status(400).json({
             status: 'Fail',
-            message: `Blog with title ${req.params.id} not Found`,
+            message: `Blog Writer with title ${req.params.id} not Found`,
           });
         }
         else {
           res.status(200).json({
             status: 'success',
-            results: BlogTitle.length,
+            results: WriterID.length,
             data: {
-              blog: BlogTitle,
+              Writers: WriterID,
             },
           });
         }

@@ -51,7 +51,7 @@ exports.getBlogById = async (req, res) => {
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
-        message: `Blog with title ${req.params.id} not Found`,
+        message: `Blog with id ${req.params.id} not Found`,
       });
     }
     else {
