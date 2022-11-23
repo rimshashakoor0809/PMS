@@ -1,17 +1,18 @@
 const { query } = require('express');
 const Blog = require('../Model/BlogModel');
+const BlogWriter = require('../Model/BlogWriterModel');
 const BLogWriter = require('../Model/BlogWriterModel');
 //blog edit
 
 
 exports.getBlog = async (req, res) => {
   try {
-    const blog = await Blog.find();
+    const blog = await Blog.find().populate("author",{name:1,_id:0,experienceLevel:1});
     res.status(200).json({
       status: 'success',
       results: blog.length,
       data: {
-        blog: blog,
+        blog
       },
     });
   } catch (err) {
@@ -47,7 +48,7 @@ exports.getBlogById = async (req, res) => {
   try {
     const BlogTitle = await Blog.findOne({
       "_id":req.params.id
-    }).exec();
+    }).populate("author",{name:1,_id:0,experienceLevel:1}).exec();
     if (!BlogTitle) {
       res.status(400).json({
         status: 'Fail',
