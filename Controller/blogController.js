@@ -83,7 +83,7 @@ exports.updateBlog = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }).exec();
+      }).populate("author",{name:1,_id:0,experienceLevel:1}).exec();
     if (!Ublog) {
       res.status(400).json({
         status: 'Fail',
