@@ -166,7 +166,7 @@ exports.createNewFreelance = async (req, res) => {
 exports.getFreelanceWithID = async (req, res) => {
   try {
     const freelanceID = await Freelance.findOne({
-      "_id": { $regex: '^' + req.params.id, $options: 'i' },
+      "_id": req.params.id,
     }).exec();
     if (!freelanceID) {
       res.status(400).json({
