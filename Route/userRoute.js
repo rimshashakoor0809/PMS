@@ -14,4 +14,15 @@ router
   .patch(userController.updateUser)
   .delete(userController.deleteUser);
 
+router
+  .route('/userPublications/:id')
+  .get(userController.getUserPublications);
+
+router
+.route('/getpublications/:id')
+  .get(userController.getUserById);
+
+
+  
+
 module.exports = router;

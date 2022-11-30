@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 const FreelanceSchema = mongoose.Schema(
     {
+        
         postion: {
             type: String,
             required: [true, 'Please provide the postion.']

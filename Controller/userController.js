@@ -1,5 +1,6 @@
 const { query } = require('express');
 const User = require('../Model/userModel');
+const Publication =require('../Model/publicationModel')
 
 
 exports.getUser= async (req, res) => {
@@ -119,6 +120,72 @@ exports.deleteUser = async (req, res) => {
     res.status(400).json({
       status: 'Fail',
       message: 'Failed To delete user.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+};
+exports.getUserPublications = async (req, res) => {
+  try {
+
+    const userName= await User.find({"publications": {$eq:req.params.id}}).exec()
+    if (!userName) {
+      res.status(400).json({
+        status: 'Fail',
+        message: `User with  not Found`,
+      });
+    }
+    else {
+      res.status(200).json({
+        status: 'success',
+        results: userName.length,
+        data: {
+          user: userName,
+        },
+      });
+    }
+
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed To Find user.',
+      error: `${err.name} ${err.message}`,
+    });
+  }
+};
+
+
+exports.getUserById = async (req, res) => {
+  try {
+    const getup = await User.findOne({
+      "_id":req.params.id
+    }).exec();
+    if (!getup) {
+      res.status(400).json({
+        status: 'Fail',
+        message: `user with id ${req.params.id} not Found`,
+      });
+      
+    }
+    else {
+      const publicationsdetails = await Publication.find({
+        "_id":getup.publications
+      }).exec();
+      
+      res.status(200).json({
+        status: 'success',
+        results: getup.length,
+        data: {
+          publications: publicationsdetails,
+        },
+      });
+    }
+
+  } catch (err) {
+    console.log(`Error Found: ${err}`);
+    res.status(400).json({
+      status: 'Fail',
+      message: 'Failed To Find Blog.',
       error: `${err.name} ${err.message}`,
     });
   }
