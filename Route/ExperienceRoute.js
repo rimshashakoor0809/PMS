@@ -8,8 +8,8 @@ router
     .post(experienceController.createNewManagement);
 
 router
-    .route('/management/:type')
-    .get(experienceController.getManagementWithInstituition)
+    .route('/management/:id')
+    .get(experienceController.getManagementWithID)
     .patch(experienceController.updateManagement)
     .delete(experienceController.deleteManagement);
 
@@ -19,8 +19,8 @@ router
     .post(experienceController.createNewIndustry);
 
 router
-    .route('/industry/:title')
-    .get(experienceController.getIndustryWithTitle)
+    .route('/industry/:id')
+    .get(experienceController.getIndustryWithID)
     .patch(experienceController.updateIndustry)
     .delete(experienceController.deleteIndustry);
 
@@ -30,8 +30,8 @@ router
     .post(experienceController.createNewFreelance);
 
 router
-    .route('/freelance/:title')
-    .get(experienceController.getFreelanceWithPlatform)
+    .route('/freelance/:id')
+    .get(experienceController.getFreelanceWithID)
     .patch(experienceController.updateFreelance)
     .delete(experienceController.deleteFreelance);
 

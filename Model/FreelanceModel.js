@@ -5,7 +5,7 @@ const FreelanceSchema = mongoose.Schema(
         
         postion: {
             type: String,
-            required: [true, 'Please provide the postion.']
+            required: [true, 'Please provide the position.']
         },
         image: {
             type: String,
@@ -31,11 +31,11 @@ const FreelanceSchema = mongoose.Schema(
             }  
         },
         startdate: {
-            type: Date,
+            type: String,
             required: [true, 'Pick the Start date first.']
         },
         enddate: {
-            type: Date,
+            type: String,
             required: [true, 'Pick the End date first.']
         }
 

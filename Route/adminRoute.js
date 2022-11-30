@@ -5,27 +5,38 @@ const router = express.Router();
 
 router
   .route('/login')
-  .get(adminController.getLogin)
-  .post(adminController.checkLogin);
+  .get(adminController.getLogin)//
+  .post(adminController.checkLogin);//
 
 router
     .route('/blogs')
-    .get(adminController.getBlogs);
+    .get(adminController.getBlog);//
 
 router
-    .route('/blogs/:title')
-    .get(adminController.getBlogsbyTitle)
-    .put(adminController.setBlogsbyTitle)
-    .delete(adminController.deleteBlogsbyTitle);
+    .route('/blogs/:id')
+    .get(adminController.getBlogById)//
+    .put(adminController.setBlog)//
+    .delete(adminController.deleteBlog);//
 
 router
     .route('/blogwriters')
-    .get(adminController.getWriters)
+    .get(adminController.getWriters)//
+    .post(adminController.addWriters)//
 
 router
-    .route('/blogwriters/:name')
-    .get(adminController.getWritersbyName)
-    .post(adminController.hireWritersbyName);
+    .route('/blogwriters/:id')
+    .get(adminController.getWritersbyID)//
+    .post(adminController.hireWritersbyID);//
+
+router
+    .route('/user')
+    .get(adminController.getUser)//
+  
+ router
+    .route('/user/:name')
+    .get(adminController.getUserbyName)//
+    .patch(adminController.updateUser)//
+    .delete(adminController.deleteUser);//
 
 module.exports = router;
 

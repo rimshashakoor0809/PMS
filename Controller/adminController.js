@@ -1,7 +1,12 @@
 const { query } = require('express');
+var mongoose = require('mongoose');
 const Admin = require('../Model/adminModel');
 const Blog = require('../Model/BlogModel');
 const BlogWriter = require('../Model/BlogWriterModel');
+const HireWriter = require('../Model/hirewriterModel');
+
+const blogController = require('./../Controller/blogController');
+const userController = require('./../Controller/userController');
 
 var token;
 var time;
@@ -23,10 +28,10 @@ exports.getLogin = async (req, res) => {
 //checkLogin
 exports.checkLogin = async (req, res) => {
     try {
-      const cred = await Admin.find({Email: req.params.email, Password: req.params.email});
+      const cred = await Admin.findOne({Email: req.body.Email, Password: req.body.Password});
       res.status(200).json({
         status: 'success',
-        message: 'Login Successful',
+        message: `Login Successful for ${cred}`,
       });
       token = Math.random()*10;
       time = Date.now();
@@ -43,119 +48,27 @@ exports.checkLogin = async (req, res) => {
 //5 mins timeout for admin
 //if (token != 0 && time + 300000 < Date.now()) {
 
-    //getBlogs
-    exports.getBlogs = async (req, res) => {
-        try {
-            const blog = await Blog.find();
-            res.status(200).json({
-                status: 'success',
-                results: blog.length,
-                data: {
-                    blog: blog,
-                },
-            });
-        } catch (err) {
-            console.log(`Error Found: ${err}`);
-            res.status(400).json({
-                status: 'Fail',
-                message: 'Blogs not Found.',
-            });
-        }
-    };
+    //getBlog
+    exports.getBlog = blogController.getBlog;
 
-    //getBlogsbyTitle
-    exports.getBlogsbyTitle = async (req, res) => {
-        try {
-          const BlogTitle = await Blog.findOne({
-            "title": { $regex: '^' + req.params.title, $options: 'i' },
-          }).exec();
-          if (!BlogTitle) {
-            res.status(400).json({
-              status: 'Fail',
-              message: `Blog with title /${req.params.title}/ not Found`,
-            });
-          }
-          else {
-            res.status(200).json({
-              status: 'success',
-              results: BlogTitle.length,
-              data: {
-                blog: BlogTitle,
-              },
-            });
-          }
-      
-        } catch (err) {
-          console.log(`Error Found: ${err}`);
-          res.status(400).json({
-            status: 'Fail',
-            message: 'Failed To Find Blog.',
-            error: `${err.name} ${err.message}`,
-          });
-        }
-    };
+    //getBlogById
+    exports.getBlogById = blogController.getBlogById;
 
-    //setBlogsbyTitle
-    exports.setBlogsbyTitle = async (req, res) => {
-        try {
-          const UBlog = await Blog.findOneAndUpdate(
-            req.params.title,
-            req.body,
-            {
-              new: true,
-              runValidators: true,
-            }
-          );
-          res.status(201).json({
-            status: 'success',
-            message: 'Blog Successfully Updated',
-            data: {
-              blod: UBlog,
-            },
-          });
-        } catch (err) {
-          console.log(`Error Found: ${err}`);
-          res.status(400).json({
-            status: 'Fail',
-            message: 'Failed to update Blog.',
-          });
-        }
-    };
+    //setBlog
+    exports.setBlog = blogController.updateBlog;
 
-    //deleteBlogsbyTitle
-    exports.deleteBlogsbyTitle = async (req, res) => {
-        try {
-          const delBlog = await Blog.findOneAndDelete(req.params.title);
-          if (!delBlog) {
-            res.status(400).json({
-              status: 'Fail',
-              message: `Blog with title ${req.params.title} not Found`,
-            });
-          }
-          else{
-            res.status(200).json({
-              status: 'success',
-              message: 'Blog Deleted Successfully',
-            });
-          }
-        } catch (err) {
-          console.log(`Error Found: ${err}`);
-          res.status(400).json({
-            status: 'Fail',
-            message: 'Failed to delete Blog.',
-          });
-        }
-    };
-
+    //deleteBlog
+    exports.deleteBlog = blogController.deleteBlog;
+    
     //getWriters
-    exports.getBlogs = async (req, res) => {
+    exports.getWriters = async (req, res) => {
         try {
-            const BlogWriter = await BlogWriter.find();
+            const blogWriter = await BlogWriter.find();
             res.status(200).json({
                 status: 'success',
-                results: BlogWriter.length,
+                results: blogWriter.length,
                 data: {
-                    blog: BlogWriter,
+                    BlogWriters: blogWriter,
                 },
             });
         } catch (err) {
@@ -167,16 +80,85 @@ exports.checkLogin = async (req, res) => {
         }
     };
 
-    //getWriters
-    exports.getWriters = async (req, res) => {res.status(200)}
+    //CreateWriters
+    exports.addWriters = async (req, res) => {
+      try {
+        const newWriter = await BlogWriter.create(req.body);
+        res.status(200).json({
+          status: 'Success',
+          message: 'Blog Writer added Successfully',
+        });
+      } catch (err) {
+        console.log(`Error Found: ${err}`);
+        res.status(400).json({
+          status: 'Fail',
+          message: 'Unable to add New Writer.',
+          error: `${err.name} ${err.message}`,
+        });
+      }
+    };
 
-    //getWritersbyName
-    exports.getWritersbyName = async (req, res) => {res.status(200)}
+    //getWritersbyID
+    exports.getWritersbyID = async (req, res) => {
+      try {
+        const WriterID = await BlogWriter.findOne({
+          "_id":req.params.id
+        }).exec();
+        if (!WriterID) {
+          res.status(400).json({
+            status: 'Fail',
+            message: `Blog Writer with title ${req.params.id} not Found`,
+          });
+        }
+        else {
+          res.status(200).json({
+            status: 'success',
+            results: WriterID.length,
+            data: {
+              Writers: WriterID,
+            },
+          });
+        }
+    
+      } catch (err) {
+        console.log(`Error Found: ${err}`);
+        res.status(400).json({
+          status: 'Fail',
+          message: 'Failed To Find Blog.',
+          error: `${err.name} ${err.message}`,
+        });
+      }
+    }
 
-    //hireWritersbyName
-    exports.hireWritersbyName = async (req, res) => {res.status(200)}
+    //hireWritersbyID
+    exports.hireWritersbyID = async (req, res) => {
+      try {
+        const hireWriter = await HireWriter.create(req.body);
+        res.status(200).json({
+          status: 'Success',
+          message: 'Writer Request Sent'
+        });
+      } catch (err) {
+        console.log(`Error Found: ${err}`);
+        res.status(400).json({
+          status: 'Fail',
+          message: 'Writer Request Failed to Send.',
+          error: `${err.name} ${err.message}`,
+        });
+      }
+    }
 
-    //userprofiling
+    //getUser
+    exports.getUser = userController.getUser;
+
+    //getUserbyName
+    exports.getUserbyName = userController.getUserbyName;
+
+    //updateUser
+    exports.updateUser = userController.updateUser;
+
+    //deleteUser
+    exports.deleteUser = userController.deleteUser;
 
 //}
 //else{

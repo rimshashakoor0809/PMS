@@ -18,7 +18,7 @@ const blogSchema = mongoose.Schema({
 
   author: {
     type: mongoose.Types.ObjectId,
-    ref: 'Blog',
+    ref: 'BlogWriter',
   },
   Status: {
     type: String,

@@ -1,13 +1,18 @@
 const mongoose = require('mongoose');
 
 const publicationSchema = mongoose.Schema({
-  type: Object,
-  journals: {
-    type: Object,
-    title: {
+  title: {
       type: String,
       required: [true, 'Please provide the journal title.'],
+  },
+  type: {
+    type: String,
+    required: [true, 'Please provide publication type'],
+    enum: {
+      values: ['articles', 'conference proceedings', 'thesis', 'research paper'],
+      message: 'Degree is either: journals, conference proceedings, thesis, research paper',
     },
+  },
     description: {
       type: String,
     },
@@ -23,45 +28,14 @@ const publicationSchema = mongoose.Schema({
       type: Number,
       required: [true, 'Please provide the journal number.'],
     },
-  },
-  conferencePaper: {
-    type: Object,
-    title: {
-      type: String,
-      required: [true, 'Please provide the journal title.'],
-    },
-    description: {
-      type: String,
-    },
-    year: {
-      type: String,
-      required: [true, 'Please provide the journal year.'],
-    },
     Publisher: {
       type: String,
       required: [true, 'Please provide the publisher title.'],
     },
     citation: {
       type: Number,
-    },
-  },
-  thesis: {
-    type: Object,
-    title: {
-      type: String,
-      required: [true, 'Please provide the thesis title.'],
-    },
-    description: {
-      type: String,
-    },
-    year: {
-      type: String,
-      required: [true, 'Please provide the thesis year.'],
-    },
-    citation: {
-      type: Number,
-    },
-  },
+  }
+    
 });
 
 const Publication = mongoose.model('Publication', publicationSchema);
